@@ -22,7 +22,11 @@ export function parse(rawDotenv: string): DotenvConfig {
       value = expandNewlines(value);
     }
     acc[trim(key)] = trim(cleanQuotes(value));
-    return acc;
+    try {
+      acc[trim(key)] = JSON.parse(acc[trim(key)]);
+    } finally {
+      return acc;
+    }
   }, {});
 }
 
